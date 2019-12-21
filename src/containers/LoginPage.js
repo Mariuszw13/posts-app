@@ -18,7 +18,7 @@ const LoginPage = (props) => {
 
     const onLoginSuccess = (token) => {
         setCookie("authToken", token, { path: '/' });
-        history.push("/");
+        history.push("/1");
     };
 
     const onLoginClick = () => {

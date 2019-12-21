@@ -15,6 +15,17 @@ export const tryLogin = async (credentials, onSuccess, onFailure) => {
     }
 };
 
+/**
+ *
+ *  authorId
+ *  content
+ *  date
+ *  excerpt
+ *  id
+ *  thumbnail
+ *  title
+ */
+
 export const getPosts = async (onSuccess, onFailure, page, token, order = "asc", orderBy = "title") => {
     try {
         const config = {params: {page, order, orderBy}, headers: {"X-Token": token}};
@@ -24,4 +35,23 @@ export const getPosts = async (onSuccess, onFailure, page, token, order = "asc",
         console.log(e);
         onFailure();
     }
+};
+
+/**
+ *
+ * name
+ * avatar
+ * description
+ * id
+ */
+
+export const getAuthor = (onSuccess, authorId, token) => {
+    const config = {headers: {"X-Token": token}};
+    instance.get(`/author/${authorId}`, config)
+        .then(response => {
+            onSuccess(response.data.data)
+        })
+        .catch(e => {
+            console.log(e)
+        })
 }
