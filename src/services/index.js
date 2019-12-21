@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {apiUrl} from '../config'
+import {ORDER, SORTING_OPTIONS} from "../utils/enums";
 
 
 const instance = axios.create({baseURL: apiUrl});
@@ -26,7 +27,10 @@ export const tryLogin = async (credentials, onSuccess, onFailure) => {
  *  title
  */
 
-export const getPosts = async (onSuccess, onFailure, page, token, order = "asc", orderBy = "title") => {
+const { ASCENDING } = ORDER;
+const { TITLE } = SORTING_OPTIONS;
+
+export const getPosts = async (onSuccess, onFailure, page, token, order = ASCENDING, orderBy = TITLE) => {
     try {
         const config = {params: {page, order, orderBy}, headers: {"X-Token": token}};
         const response = await instance.get("/posts", config);

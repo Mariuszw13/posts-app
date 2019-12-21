@@ -41,6 +41,11 @@ export default styled(withCookies(PostItem))`
     border: 1px solid #A6A6A6;
     padding: 10px;
     margin: 10px 0;
+    
+    &.grid {
+        width: 20%;
+        margin-right: 10px;
+    }
 
     .main-container {
         display: flex;
