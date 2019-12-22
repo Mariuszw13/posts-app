@@ -27,8 +27,8 @@ export const tryLogin = async (credentials, onSuccess, onFailure) => {
  *  title
  */
 
-const { ASCENDING } = ORDER;
-const { TITLE } = SORTING_OPTIONS;
+const {ASCENDING} = ORDER;
+const {TITLE} = SORTING_OPTIONS;
 
 export const getPosts = async (onSuccess, onFailure, page, token, order = ASCENDING, orderBy = TITLE) => {
     try {
@@ -41,6 +41,16 @@ export const getPosts = async (onSuccess, onFailure, page, token, order = ASCEND
     }
 };
 
+const getData = async (onSuccess, url, token) => {
+    const config = {headers: {"X-Token": token}};
+    try {
+        const response = await instance.get(url, config);
+        onSuccess(response.data.data)
+    } catch (e) {
+        console.log(e)
+    }
+};
+
 /**
  *
  * name
@@ -49,13 +59,15 @@ export const getPosts = async (onSuccess, onFailure, page, token, order = ASCEND
  * id
  */
 
-export const getAuthor = (onSuccess, authorId, token) => {
+export const getAuthor = (onSuccess, authorId, token) => getData(onSuccess, `/author/${authorId}`, token);
+
+
+export const getPostAndComments = (onSuccess, postId, token) =>
+    Promise.all([getData(onSuccess("postData"), `/posts/${postId}`, token), getData(onSuccess("comments"), `/posts/${postId}/comments`, token)]);
+
+export const addComment = (postId, token, name, comment ) => {
     const config = {headers: {"X-Token": token}};
-    instance.get(`/author/${authorId}`, config)
-        .then(response => {
-            onSuccess(response.data.data)
-        })
-        .catch(e => {
-            console.log(e)
-        })
+    instance.post("/comments", {id: postId, name, comment}, config)
+        .then(() => console.log("Comment added"))
+        .catch(e => console.log(e));
 }

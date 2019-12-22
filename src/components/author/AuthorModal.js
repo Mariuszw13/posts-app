@@ -9,7 +9,7 @@ const AuthorModal = ({className, open, onClose, authorData}) => {
         <Modal open={open} onClose={onClose}>
             <div className={className}>
                 <header>
-                    <h2 className="author-name">{data.name}</h2>
+                    <h2>{data.name}</h2>
                     <img className="avatar" src={data.avatar} alt="avatar"/>
                 </header>
                 <span>{data.description}</span>

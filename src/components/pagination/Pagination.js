@@ -13,9 +13,8 @@ const getPages = (currentPage) => {
 
 const Pagination = ({className, children}) => {
     const params = useParams();
-    const currentPage = parseInt(params.page);
+    const currentPage = params.page ? parseInt(params.page) : 1;
     const pages = getPages(currentPage);
-
     return (
         <>
             {children}

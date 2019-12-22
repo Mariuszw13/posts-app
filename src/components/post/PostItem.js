@@ -5,8 +5,9 @@ import classnames from 'classnames';
 import {getAuthor} from "../../services";
 import {withCookies} from "react-cookie";
 import AuthorModal from "../author/AuthorModal";
+import {Link} from "react-router-dom";
 
-const PostItem = ({className, content, date, excerpt, thumbnail, title, authorId, cookies}) => {
+const PostItem = ({className, id, date, excerpt, thumbnail, title, authorId, cookies}) => {
     const [excerptVisible, toggleExcerpt] = useState(false);
     const [modalVisible, toggleModal] = useState(false);
     const [authorData, setAuthorData] = useState(null);
@@ -21,7 +22,7 @@ const PostItem = ({className, content, date, excerpt, thumbnail, title, authorId
                 <img className="thumbnail" src={thumbnail} alt="thumbnail"/>
                 <div className="post-data">
                     <span className="date">{date}</span>
-                    <span className="title">{title}</span>
+                    <Link to={`/post/${id}`} className="title">{title}</Link>
                 </div>
                 <div className="controls">
                     <Button onClick={() => toggleExcerpt(true)}>e</Button>
