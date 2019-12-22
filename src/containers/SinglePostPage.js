@@ -1,6 +1,6 @@
 import React from "react";
 import {withCookies} from "react-cookie";
-import {addComment, getAuthor, getPostAndComments} from "../services";
+import {addComment, getAuthor, getPostAndComments, putReadingTime} from "../services";
 import Button from "@material-ui/core/Button";
 import AuthorModal from "../components/author/AuthorModal";
 import Comment from "../components/comment/Comment";
@@ -20,6 +20,19 @@ class SinglePostPage extends React.Component {
     componentDidMount() {
         this.fetchPost();
     }
+
+    componentWillUnmount() {
+        this.putReadingTime();
+    }
+
+    putReadingTime = () => {
+        const {cookies, match} = this.props;
+        const token = cookies.cookies.authToken;
+        const id = match.params.id;
+        const readingTime = new Date().getTime() - this.state.startTime;
+
+        putReadingTime(id, token, readingTime)
+    };
 
     fetchPost = () => {
         const {cookies, match} = this.props;

@@ -8,7 +8,7 @@ const PostsList = ({className, posts, grid}) => {
     return (
         <Pagination>
             <div className={classnames(className, grid && "grid")}>
-                {posts && posts.map(post => <PostItem className={classnames(grid && "grid")} key={post.id} {...post} />)}
+                {posts && posts.map(post => <PostItem grid={grid} key={post.id} {...post} />)}
             </div>
         </Pagination>
 

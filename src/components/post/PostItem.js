@@ -5,35 +5,37 @@ import classnames from 'classnames';
 import {getAuthor} from "../../services";
 import {withCookies} from "react-cookie";
 import AuthorModal from "../author/AuthorModal";
-import {Link} from "react-router-dom";
+import {useHistory} from 'react-router-dom'
 
-const PostItem = ({className, id, date, excerpt, thumbnail, title, authorId, cookies}) => {
+const PostItem = ({className, id, date, excerpt, thumbnail, title, authorId, cookies, grid}) => {
     const [excerptVisible, toggleExcerpt] = useState(false);
     const [modalVisible, toggleModal] = useState(false);
     const [authorData, setAuthorData] = useState(null);
+    const history = useHistory();
 
     const onModalOpen = () => {
         toggleModal(true);
         !authorData && getAuthor(data => setAuthorData(data), authorId, cookies.cookies.authToken)
     };
+
     return (
-        <div className={className}>
+        <div className={classnames(className, grid && "grid")} onClick={() => grid && history.push(`/post/${id}`)}>
             <div className="main-container">
                 <img className="thumbnail" src={thumbnail} alt="thumbnail"/>
                 <div className="post-data">
                     <span className="date">{date}</span>
-                    <Link to={`/post/${id}`} className="title">{title}</Link>
+                    <span onClick={() => !grid && history.push(`/post/${id}`)} className="title">{title}</span>
                 </div>
-                <div className="controls">
+                {!grid && <div className="controls">
                     <Button onClick={() => toggleExcerpt(true)}>e</Button>
                     <Button onClick={onModalOpen}>i</Button>
-                </div>
+                </div>}
             </div>
             <div className={classnames("excerpt", excerptVisible && "active")}>
                 <span>{excerpt}</span>
                 <Button onClick={() => toggleExcerpt(false)} color="secondary">close</Button>
             </div>
-            <AuthorModal open={modalVisible} authorData={authorData} onClose={() => toggleModal(false)} />
+            <AuthorModal open={modalVisible} authorData={authorData} onClose={() => toggleModal(false)}/>
         </div>
     )
 }
@@ -46,6 +48,14 @@ export default styled(withCookies(PostItem))`
     &.grid {
         width: 20%;
         margin-right: 10px;
+        cursor: pointer;
+        
+        .title {
+            :hover {
+                color: #000;
+            }
+        }
+
     }
 
     .main-container {

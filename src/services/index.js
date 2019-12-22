@@ -61,7 +61,6 @@ const getData = async (onSuccess, url, token) => {
 
 export const getAuthor = (onSuccess, authorId, token) => getData(onSuccess, `/author/${authorId}`, token);
 
-
 export const getPostAndComments = (onSuccess, postId, token) =>
     Promise.all([getData(onSuccess("postData"), `/posts/${postId}`, token), getData(onSuccess("comments"), `/posts/${postId}/comments`, token)]);
 
@@ -70,4 +69,11 @@ export const addComment = (postId, token, name, comment ) => {
     instance.post("/comments", {id: postId, name, comment}, config)
         .then(() => console.log("Comment added"))
         .catch(e => console.log(e));
-}
+};
+
+export const putReadingTime = (postId, token, time) => {
+    const config = {headers: {"X-Token": token}};
+    instance.put(`/time/${postId}`, {time}, config)
+        .then(() => console.log(`Reading time posted: ${time} ms`))
+        .catch(e => console.log(e));
+};
