@@ -13,10 +13,9 @@ const PostsList = ({className, posts, grid}) => {
         </Pagination>
 
     )
-}
+};
 
 export default styled(PostsList)`
-    
     display: flex;
     flex-direction: column;
     justify-items: flex-start;

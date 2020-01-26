@@ -16,9 +16,9 @@ const Layout = ({className, children, cookies}) => {
     return (
         <>
             <div className={className}>
-                <NavLink className="nav-link" to="/1">Home</NavLink>
+                <CenterNavLink to="/1">Home</CenterNavLink>
                 <h1>Web App</h1>
-                <Button className="close-button" color="secondary" onClick={logout}>logout</Button>
+                <Button color="secondary" onClick={logout}>logout</Button>
             </div>
             {children}
         </>
@@ -31,8 +31,8 @@ export default styled(withCookies(Layout))`
     height: 10vh;
     background-color: #1E88E5;
     padding: 10px;
-    
-    .nav-link {
-        align-self: center;
-    }
 `;
+
+const CenterNavLink = styled(NavLink)`
+    align-self: center;
+`

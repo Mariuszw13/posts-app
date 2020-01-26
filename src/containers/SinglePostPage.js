@@ -1,6 +1,6 @@
 import React from "react";
 import {withCookies} from "react-cookie";
-import {addComment, getAuthor, getPostAndComments, putReadingTime} from "../services";
+import {addComment, getAuthor, getComments, getPostAndComments, putReadingTime} from "../services";
 import Button from "@material-ui/core/Button";
 import AuthorModal from "../components/author/AuthorModal";
 import Comment from "../components/comment/Comment";
@@ -70,6 +70,7 @@ class SinglePostPage extends React.Component {
         const id = match.params.id;
         this.toggleCommentModal(false)();
         addComment(id, token, name, comment);
+        getComments(this.onDataFetchSuccess("comments"), id, token);
     };
 
     render() {
@@ -78,17 +79,17 @@ class SinglePostPage extends React.Component {
             <div className={this.props.className}>
                 <h2>{title}</h2>
                 <img className="thumbnail" src={thumbnail} alt="thumbnail"/>
-                <div className="post-content">
-                    <div className="post-header">
+                <PostContent>
+                    <PostHeader>
                         <span>{date}</span>
                         <Button onClick={this.onAuthorModalOpen} variant="contained">i</Button>
-                    </div>
+                    </PostHeader>
                     <p>{content}</p>
-                </div>
+                </PostContent>
                 <Button variant="contained" onClick={this.toggleCommentModal(true)}>comment</Button>
-                <div className="comments-section">
+                <CommentSection>
                     {this.state.comments.map((comment, index) => <Comment key={index} {...comment} />)}
-                </div>
+                </CommentSection>
                 <AuthorModal open={this.state.authorModalVisible}
                              onClose={this.toggleAuthorModal(false)}
                              authorData={this.state.authorData}
@@ -107,18 +108,22 @@ export default styled(withCookies(SinglePostPage))`
     flex-direction: column;
     align-items: center;
     
-    .post-header {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 10px;
-    }
-    
-    .post-content {
-        width: 70%;
-    }
-    
     .comments-section {
-        margin-top: 10px;
-        width: 70%;
+        
     }
+`;
+
+const PostHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+`;
+
+const PostContent = styled.div`
+    width: 70%;
+`;
+
+const CommentSection = styled.div`
+    margin-top: 10px;
+    width: 70%;
 `;

@@ -17,14 +17,12 @@ const AddCommentModal = ({className, open, onClose, onCommentSubmit}) => {
         <Modal open={open} onClose={onClose}>
             <div className={className}>
                 <h2>Add comment</h2>
-                <TextField className="name-input"
-                           label="name"
+                <NameInput label="name"
                            variant="outlined"
                            value={name}
                            onChange={event => setName(event.target.value)}
                 />
-                <TextField className="comment-input"
-                           label="Your comment"
+                <TextField label="Your comment"
                            variant="outlined"
                            multiline
                            rows={5}
@@ -37,19 +35,19 @@ const AddCommentModal = ({className, open, onClose, onCommentSubmit}) => {
                     }
                     label="I Accept"
                 />
-                <div className="buttons-container">
-                    <Button className="close-button"
-                            onClick={() => onCommentSubmit(name, comment)}
+                <ButtonsContainer>
+                    <Button onClick={() => onCommentSubmit(name, comment)}
                             color="primary"
                             disabled={isButtonDisabled}>
                         submit
                     </Button>
-                    <Button className="close-button" onClick={onClose} color="secondary">close</Button>
-                </div>
+                    <Button onClick={onClose} color="secondary">close</Button>
+                </ButtonsContainer>
             </div>
         </Modal>
     )
-}
+};
+
 export default styled(AddCommentModal)`
     position: absolute;
     display: flex;
@@ -59,19 +57,17 @@ export default styled(AddCommentModal)`
     top: calc(40% - 20vh);
     left: calc(50% - 20vw);
     background-color: white;
-    
-    .name-input {
-        width: 50%;
+`;
+
+const NameInput = styled(TextField)`
+    width: 50%;
+    .MuiOutlinedInput-root {
         margin-bottom: 10px;
     }
-    
-    .description {
-        margin-bottom: 20px;
-    }
-    
-    .buttons-container {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-    }
+`;
+
+const ButtonsContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
 `;

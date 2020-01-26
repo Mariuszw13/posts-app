@@ -8,16 +8,17 @@ const AuthorModal = ({className, open, onClose, authorData}) => {
     return (
         <Modal open={open} onClose={onClose}>
             <div className={className}>
-                <header>
-                    <h2>{data.name}</h2>
-                    <img className="avatar" src={data.avatar} alt="avatar"/>
-                </header>
-                <span>{data.description}</span>
-                <Button className="close-button" onClick={onClose} color="secondary">close</Button>
+                <Header>
+                    <AuthorName>{data.name}</AuthorName>
+                    <Avatar src={data.avatar} alt="avatar"/>
+                </Header>
+                <Description>{data.description}</Description>
+                <CloseButton onClick={onClose} color="secondary">close</CloseButton>
             </div>
         </Modal>
     )
-}
+};
+
 export default styled(AuthorModal)`
     position: absolute;
     display: flex;
@@ -27,30 +28,30 @@ export default styled(AuthorModal)`
     top: calc(40% - 20vh);
     left: calc(50% - 15vw);
     background-color: white;
-    
-    header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 20px;
-    }
-    
-    h2 {
-        align-self: center;
-    }
-    
-    .avatar {
-        max-width: 120px;
-        height: 120px;
-        justify-content: flex-end;
-    }
-    
-    .description {
-        margin-bottom: 20px;
-    }
-    
-    .close-button {
-        margin-top: 20px;
-        margin-left: auto;
-        width: 30%;
-    }
+`;
+
+const Header = styled.header`
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+`;
+
+const AuthorName = styled.h2`
+    align-self: center;
+`;
+
+const Avatar = styled.img`
+    max-width: 120px;
+    height: 120px;
+    justify-content: flex-end;
+`;
+
+const Description = styled.span`
+    margin-bottom: 20px;
+`;
+
+const CloseButton = styled(Button)`
+    margin-top: 20px;
+    margin-left: auto;
+    width: 30%;
 `;

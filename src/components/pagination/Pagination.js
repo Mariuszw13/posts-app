@@ -9,7 +9,7 @@ const getPages = (currentPage) => {
     const first = currentPage - 1 >= firstPage ? currentPage - 1 : currentPage + 2;
     const second = currentPage < lastPage ? currentPage + 1 : currentPage - 2;
     return [currentPage, first, second].sort((a, b) => a - b)
-}
+};
 
 const Pagination = ({className, children}) => {
     const params = useParams();
@@ -21,29 +21,26 @@ const Pagination = ({className, children}) => {
             <div className={className}>
                 {currentPage === lastPage &&
                 <>
-                    <NavLink className="nav-link" to={`/${firstPage}`}>{firstPage}</NavLink>
+                    <NavigationLink to={`/${firstPage}`}>{firstPage}</NavigationLink>
                     <span>...</span>
                 </>}
-                {pages.map(page => <NavLink key={page} className="nav-link" to={`/${page}`}>{page}</NavLink>)}
+                {pages.map(page => <NavigationLink key={page} to={`/${page}`}>{page}</NavigationLink>)}
                 {currentPage < lastPage - 1 &&
                 <>
                     {currentPage !== lastPage - 2 && <span>...</span>}
-                    <NavLink className="nav-link" to={`/${lastPage}`}>{lastPage}</NavLink>
+                    <NavigationLink to={`/${lastPage}`}>{lastPage}</NavigationLink>
                 </>}
             </div>
         </>
     )
+};
 
-}
-
-export default styled(Pagination)`
-
-    .nav-link {
-        margin: 5px;
-        
-        &.active {
-            color: aqua;
-        }
+const NavigationLink = styled(NavLink)`
+    margin: 5px;
+    
+    &.active {
+        color: aqua;
     }
-
 `;
+
+export default Pagination

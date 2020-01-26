@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useCallback, useEffect} from 'react'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import {tryLogin} from "../services";
@@ -13,22 +13,39 @@ const LoginPage = ({className}) => {
     const [, setCookie] = useCookies(['authToken']);
     const history = useHistory();
 
-    const handleChange = setter => event => {
-        setter(event.target.value)
-    };
-
     const onLoginSuccess = (token) => {
         setCookie("authToken", token, {path: '/'});
         history.push("/1");
     };
 
+    const handleUserKeyPress = useCallback(event => {
+        const {keyCode} = event;
+        if (keyCode === 13) {
+            tryLogin({username: login, password}, onLoginSuccess, () => null)
+        }
+    }, [login, onLoginSuccess, password]);
+
+    useEffect(() => {
+        window.addEventListener('keydown', handleUserKeyPress);
+
+        return () => {
+            window.removeEventListener('keydown', handleUserKeyPress);
+        };
+    }, [handleUserKeyPress]);
+
+    const handleChange = setter => event => {
+        setter(event.target.value)
+    };
+
     const onLoginClick = () => {
+        console.log(login)
         tryLogin({username: login, password}, onLoginSuccess, () => null)
     };
 
     return (
         <div className={className}>
-            <TextField className="text-field" required label="Login" variant="outlined" value={login} onChange={handleChange(setLogin)}/>
+            <TextField className="text-field" required label="Login" variant="outlined" value={login}
+                       onChange={handleChange(setLogin)}/>
             <TextField
                 className="text-field"
                 required

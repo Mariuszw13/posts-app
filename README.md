@@ -1,3 +1,8 @@
+This project has no config.json file with api url and thus it won't work. It is in this public repo to showcase the code.
+Main purpose of this project was to play with async/await and hooks.
+
+I will rebuild this project in the future to use some public api, so anyone will be able to run it.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

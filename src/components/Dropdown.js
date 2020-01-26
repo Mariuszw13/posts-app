@@ -18,6 +18,6 @@ const Dropdown = ({className, currentOption, options, handleChange, label}) => (
         {options.map(option => <MenuItem key={option} value={option}>{option}</MenuItem>)}
     </Select>
     </FormControl>
-)
+);
 
 export default Dropdown;
